@@ -1,7 +1,11 @@
+import { Center } from "@mantine/core";
+
 const Login = () => {
   return (
     <>
-      <h1>Login</h1>
+      <Center style={{ height: "100vh" }}>
+        <h1>Login</h1>
+      </Center>
     </>
   );
 };
