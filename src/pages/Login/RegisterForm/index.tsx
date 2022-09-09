@@ -1,7 +1,16 @@
-import { Button, Group, TextInput } from "@mantine/core";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+import { Button, Group, PasswordInput, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { showNotification } from "@mantine/notifications";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { register } from "./service";
 
 const RegisterForm = () => {
+  const [captchaToken, setCaptchaToken] = useState("");
+
+  const navigate = useNavigate();
+
   const form = useForm({
     initialValues: {
       name: "",
@@ -18,15 +27,24 @@ const RegisterForm = () => {
           : "Senha inválida",
     },
   });
+
   return (
     <>
       <h3>Cadastro</h3>
 
       <form
-        onSubmit={form.onSubmit((values) =>
-          // login(values.email, values.password, navigate)
-          console.log("values", values)
-        )}
+        onSubmit={form.onSubmit((values) => {
+          register(values.name, values.email, values.password, captchaToken);
+          if (captchaToken) {
+            console.log("values", values);
+          } else {
+            showNotification({
+              title: "Captcha não resolvido",
+              message: 'Clique em "Sou Humano"',
+              color: "red",
+            });
+          }
+        })}
       >
         <TextInput
           withAsterisk
@@ -44,13 +62,17 @@ const RegisterForm = () => {
           {...form.getInputProps("email")}
         />
 
-        <TextInput
+        <PasswordInput
           withAsterisk
           label="Senha"
           placeholder="*********"
-          type="password"
           sx={{ marginBottom: 20 }}
           {...form.getInputProps("password")}
+        />
+
+        <HCaptcha
+          sitekey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+          onVerify={(token) => setCaptchaToken(token)}
         />
 
         <Group position="right" mt="md">

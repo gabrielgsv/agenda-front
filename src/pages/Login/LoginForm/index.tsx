@@ -1,4 +1,4 @@
-import { Group, Button, TextInput } from "@mantine/core";
+import { Group, Button, TextInput, PasswordInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useNavigate } from "react-router-dom";
 import { login } from "./service";
@@ -34,11 +34,10 @@ const LoginForm = () => {
           {...form.getInputProps("email")}
         />
 
-        <TextInput
+        <PasswordInput
           withAsterisk
           label="Senha"
           placeholder="*********"
-          type="password"
           sx={{ marginBottom: 20 }}
           {...form.getInputProps("password")}
         />
