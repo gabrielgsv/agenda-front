@@ -12,6 +12,7 @@ export function login(email: string, password: string, navigate: Function) {
       .then((res) => {
         sessionStorage.setItem(Auth, res.data.access_token);
         showNotification({
+          id: "successLogin",
           title: "Login feito com sucesso",
           message: "",
         });
@@ -20,6 +21,7 @@ export function login(email: string, password: string, navigate: Function) {
       .catch((error) => {
         console.error(error);
         showNotification({
+          id: "errorLogin",
           title: "Erro ao fazer o login",
           message: "Tente novamente",
           color: "red",

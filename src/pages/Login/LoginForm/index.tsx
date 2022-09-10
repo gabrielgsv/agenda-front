@@ -27,6 +27,7 @@ const LoginForm = () => {
         )}
       >
         <TextInput
+          id="email"
           withAsterisk
           label="Email"
           placeholder="seuemail@email.com"
@@ -35,6 +36,7 @@ const LoginForm = () => {
         />
 
         <PasswordInput
+          id="password"
           withAsterisk
           label="Senha"
           placeholder="*********"
@@ -43,7 +45,9 @@ const LoginForm = () => {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Entrar</Button>
+          <Button id="loginButton" type="submit">
+            Entrar
+          </Button>
         </Group>
       </form>
     </>
