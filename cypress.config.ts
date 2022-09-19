@@ -10,5 +10,6 @@ export default defineConfig({
   },
   env: {
     appAdress: "http://localhost:5173",
+    urlApi: "http://localhost:4000",
   },
 });
