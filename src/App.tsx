@@ -16,6 +16,7 @@ function App() {
         colorScheme: colorScheme,
         primaryColor: "teal",
         defaultRadius: "lg",
+        white: "#f1f1f1",
       }}
     >
       <NotificationsProvider>
