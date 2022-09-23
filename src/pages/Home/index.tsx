@@ -1,6 +1,6 @@
 import "dayjs/locale/pt-br";
 import { Center } from "@mantine/core";
-import Calendar from "../../components/Calendar";
+import Calendar from "./Calendar";
 
 const Home = () => {
   return (
