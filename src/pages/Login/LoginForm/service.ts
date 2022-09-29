@@ -1,5 +1,5 @@
 import { showNotification } from "@mantine/notifications";
-import { Auth } from "../../../config/storage";
+import { Auth, UserId } from "../../../config/storage";
 import api from "../../../services/api";
 
 export function login(email: string, password: string, navigate: Function) {
@@ -11,6 +11,7 @@ export function login(email: string, password: string, navigate: Function) {
       })
       .then((res) => {
         sessionStorage.setItem(Auth, res.data.access_token);
+        sessionStorage.setItem(UserId, res.data.userId);
         showNotification({
           id: "successLogin",
           title: "Login feito com sucesso",

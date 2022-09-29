@@ -1,8 +1,12 @@
+import "dayjs/locale/pt-br";
+import { Center } from "@mantine/core";
+import Calendar from "./Calendar";
+
 const Home = () => {
   return (
-    <>
-      <h1>Home</h1>
-    </>
+    <Center sx={{ height: "100vh" }}>
+      <Calendar />
+    </Center>
   );
 };
 

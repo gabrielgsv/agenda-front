@@ -24,7 +24,7 @@
   "include": [
     "src",
     "**/*.ts"
-  ],
+, "cypress/support/login.ts", "cypress/support/commands.ts"  ],
   "references": [
     {
       "path": "./tsconfig.node.json"
