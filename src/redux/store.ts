@@ -8,6 +8,10 @@ export const store = configureStore({
     [themeSlice.name]: themeSlice.reducer,
     [calendarSlice.name]: calendarSlice.reducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

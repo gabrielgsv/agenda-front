@@ -2,6 +2,7 @@ import { ActionIcon } from "@mantine/core";
 import { FiMoon, FiSun } from "react-icons/fi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { toogleTheme } from "../../redux/theme/themeSlicer";
+import style from "./button.module.css";
 
 const ButtonTheme = () => {
   const dispatch = useAppDispatch();
@@ -19,12 +20,7 @@ const ButtonTheme = () => {
         title="Toggle color scheme"
         size="xl"
         radius="xl"
-        sx={{
-          float: "right",
-          right: 20,
-          top: 10,
-          borderWidth: 2,
-        }}
+        className={style.buttonTheme}
       >
         {colorScheme === "light" ? <FiMoon size={25} /> : <FiSun size={25} />}
       </ActionIcon>

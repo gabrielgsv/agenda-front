@@ -20,11 +20,16 @@ const Calendar = () => {
     const month = date.getMonth() + 1;
     const year = date.getFullYear();
     getDaysNotification(month, year).then((res) => {
+      let days: number[] = [];
+      res.data.forEach((item) => {
+        days = [...days, new Date(item.dateTime).getDate()];
+      });
+
       setDaysNotification({
         ...daysNotification,
         [year]: {
           ...daysNotification?.[year],
-          [month]: res.data,
+          [month]: days,
         },
       });
     });
@@ -41,8 +46,8 @@ const Calendar = () => {
       <CalendarTine
         onChange={(value: Date) => dispatch(handleCalendar(value))}
         onMonthChange={(value: Date) => {
-          getDays(value);
           dispatch(handleCalendar(value));
+          getDays(value);
         }}
         value={calendarValue}
         locale="pt-br"
