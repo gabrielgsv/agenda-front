@@ -1,4 +1,4 @@
-import { Card, Center, Group, Text } from "@mantine/core";
+import { Card, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../redux/hooks";
 import { getTaskByDay } from "./service";
