@@ -1,5 +1,6 @@
 import { Indicator } from "@mantine/core";
 import { Calendar as CalendarTine } from "@mantine/dates";
+import { useMediaQuery } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 import { handleCalendar } from "../../../redux/calendar/calendarSlicer";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -15,6 +16,7 @@ const Calendar = () => {
   const [daysNotification, setDaysNotification] = useState<IDaysNotification>(
     {}
   );
+  const isDesktop = useMediaQuery("(min-width: 900px)");
 
   function getDays(date: Date) {
     const month = date.getMonth() + 1;
@@ -51,7 +53,7 @@ const Calendar = () => {
         }}
         value={calendarValue}
         locale="pt-br"
-        size="lg"
+        size={isDesktop ? "lg" : "md"}
         firstDayOfWeek="sunday"
         renderDay={(date) => {
           const day = date.getDate();

@@ -28,25 +28,23 @@ const Task = () => {
   }, [taskDate]);
 
   return (
-    <Center sx={{ flexDirection: "column", gap: 30 }}>
+    <div className={style.taskContainer}>
       <Text className={style.title} weight="bold">
         Tarefas
       </Text>
       {tasks?.map((task) => (
-        <Card sx={{ width: 500 }} key={task.id}>
-          <Card.Section withBorder inheritPadding py="xs">
-            <Group position="apart">
+        <div style={{ height: 400, padding: 10 }} key={task.id}>
+          <Card withBorder shadow="sm">
+            <Card.Section withBorder inheritPadding py="xs">
               <Text weight={500} size="xl">
                 {task.title}
               </Text>
-            </Group>
-          </Card.Section>
-          <Text mt="sm" color="dimmed" size="sm">
-            {task.description}
-          </Text>
-        </Card>
+            </Card.Section>
+            <Text size="sm">{task.description}</Text>
+          </Card>
+        </div>
       ))}
-    </Center>
+    </div>
   );
 };
 
