@@ -5,17 +5,21 @@ interface IResponse {
   data: [
     {
       id: number;
+      userId: number;
+      title: string;
       dateTime: Date;
+      description: string;
     }
   ];
 }
-export async function getDaysNotification(
+export async function getTaskByDay(
+  day: number,
   month: number,
   year: number
 ): Promise<IResponse> {
   const userId = sessionStorage.getItem(UserId) || "";
 
   return await api.get(
-    `task/days-of-month?month=${month}&year=${year}&userId=${userId}`
+    `task/task-day?day=${day}&month=${month}&year=${year}&userId=${userId}`
   );
 }
