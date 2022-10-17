@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../redux/hooks";
 import { getTaskByDay } from "./service";
 import style from "./task.module.css";
+import TaskModal from "./TaskModal";
 
 const Task = () => {
   interface ITaskItem {
@@ -31,9 +32,10 @@ const Task = () => {
     <div className={style.taskContainer}>
       <Text className={style.title} weight="bold">
         Tarefas
+        <TaskModal tasks={tasks} setTasks={setTasks} />
       </Text>
       {tasks?.map((task) => (
-        <div style={{ height: 400, padding: 10 }} key={task.id}>
+        <div style={{ height: "auto", padding: 10 }} key={task.id}>
           <Card withBorder shadow="sm">
             <Card.Section withBorder inheritPadding py="xs">
               <Text weight={500} size="xl">
