@@ -2,20 +2,14 @@ import { Indicator } from "@mantine/core";
 import { Calendar as CalendarTine } from "@mantine/dates";
 import { useMediaQuery } from "@mantine/hooks";
 import { useEffect, useState } from "react";
-import { handleCalendar } from "../../../redux/calendar/calendarSlicer";
+import {
+  handleCalendar,
+  handleDaysNotification,
+} from "../../../redux/calendar/calendarSlicer";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getDaysNotification } from "./service";
 
 const Calendar = () => {
-  interface IDaysNotification {
-    [x: number]: {
-      [x: number]: number[];
-    };
-  }
-
-  const [daysNotification, setDaysNotification] = useState<IDaysNotification>(
-    {}
-  );
   const isDesktop = useMediaQuery("(min-width: 900px)");
 
   function getDays(date: Date) {
@@ -27,13 +21,7 @@ const Calendar = () => {
         days = [...days, new Date(item.dateTime).getDate()];
       });
 
-      setDaysNotification({
-        ...daysNotification,
-        [year]: {
-          ...daysNotification?.[year],
-          [month]: days,
-        },
-      });
+      dispatch(handleDaysNotification({ year, month, days }));
     });
   }
 
@@ -43,6 +31,9 @@ const Calendar = () => {
 
   const dispatch = useAppDispatch();
   const calendarValue = useAppSelector((state) => state.calendar.value);
+  const daysNotification = useAppSelector(
+    (state) => state.calendar.daysNotification
+  );
   return (
     <>
       <CalendarTine
