@@ -1,29 +1,40 @@
 import React, { createContext, useState, useContext } from "react";
 
-interface ITaskContext {
-  task:
-    | {
-        id: number;
-        userId: number;
-        title: string;
-        dateTime: Date;
-        description: string;
-      }[]
-    | null;
-  setTask:
-    | React.Dispatch<React.SetStateAction<{}>>
-    | React.Dispatch<React.SetStateAction<null>>;
+type ITaskItem = {
+  id: number | null;
+  userId: number | null;
+  title: string;
+  dateTime: Date | null;
+  description: string;
+};
+
+type ITaskContext = {
+  task: ITaskItem | null;
+  setTask: React.Dispatch<React.SetStateAction<ITaskItem | any>>;
   openModal: boolean;
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-}
+};
 
-const TaskContext = createContext<ITaskContext | null>(null);
+const DEFAULT_VALUE = {
+  task: {
+    id: null,
+    userId: null,
+    title: "",
+    dateTime: null,
+    description: "",
+  },
+  setTask: () => {},
+  openModal: false,
+  setOpenModal: () => {},
+};
+
+const TaskContext = createContext<ITaskContext>(DEFAULT_VALUE);
 
 type Props = {
   children: JSX.Element;
 };
 export default function TaskProvider({ children }: Props) {
-  const [task, setTask] = useState(null);
+  const [task, setTask] = useState(DEFAULT_VALUE.task);
   const [openModal, setOpenModal] = useState(false);
 
   return (

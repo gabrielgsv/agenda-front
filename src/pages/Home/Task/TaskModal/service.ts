@@ -23,3 +23,17 @@ export async function createTask(
       console.error(error);
     });
 }
+
+export async function deleteTask(
+  id: number | null | undefined,
+  callback: Function
+) {
+  return api
+    .delete(`task/${id}`)
+    .then((res) => {
+      callback(res.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}

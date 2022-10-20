@@ -15,3 +15,9 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.cardConteiner {
+  height: auto;
+  padding: 10;
+  cursor: pointer;
+}

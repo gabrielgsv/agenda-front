@@ -1,9 +1,10 @@
+import { useEffect } from "react";
 import { Button, Group, Modal, Textarea, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { handleAddDayNotificatiion } from "../../../../redux/calendar/calendarSlicer";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
 import { useTask } from "../context/TaskContext";
-import { createTask } from "./service";
+import { createTask, deleteTask } from "./service";
 
 interface ITaskItem {
   id: number;
@@ -20,7 +21,7 @@ interface IProps {
 }
 
 const TaskModal = ({ tasks, setTasks }: IProps) => {
-  const { openModal, setOpenModal } = useTask();
+  const { task, openModal, setOpenModal } = useTask();
   const dispatch = useAppDispatch();
 
   const dateTime = useAppSelector((state) => state.calendar.value);
@@ -36,6 +37,10 @@ const TaskModal = ({ tasks, setTasks }: IProps) => {
       description: (value) => (value.length > 0 ? null : "Digite a Descrição"),
     },
   });
+
+  useEffect(() => {
+    form.setValues({ title: task?.title, description: task?.description });
+  }, [task]);
 
   return (
     <>
@@ -81,8 +86,15 @@ const TaskModal = ({ tasks, setTasks }: IProps) => {
           />
 
           <Group position="right" mt="md">
+            <Button
+              id="loginButton"
+              onClick={() => deleteTask(task?.id, () => setOpenModal(false))}
+              color="red"
+            >
+              Deletar
+            </Button>
             <Button id="loginButton" type="submit">
-              Cadastrar
+              {task?.id ? "Alterar" : "Cadastrar"}
             </Button>
           </Group>
         </form>
