@@ -12,11 +12,10 @@ interface IResponse {
     }
   ];
 }
-export async function getTaskByDay(
-  day: number,
-  month: number,
-  year: number
-): Promise<IResponse> {
+export async function getTaskByDay(date: Date): Promise<IResponse> {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
   const userId = sessionStorage.getItem(UserId) || "";
 
   return await api.get(

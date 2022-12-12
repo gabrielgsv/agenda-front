@@ -23,10 +23,8 @@ const Task = () => {
 
   useEffect(() => {
     const date = new Date(taskDate);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    getTaskByDay(day, month, year).then((res) => {
+
+    getTaskByDay(date).then((res) => {
       setTasks(res.data);
     });
   }, [taskDate]);

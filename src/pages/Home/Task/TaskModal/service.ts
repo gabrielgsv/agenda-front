@@ -16,8 +16,30 @@ export async function createTask(
       dateTime,
     })
     .then((res) => {
-      console.log("res", res.data);
       callback(res.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+export async function updateTask(
+  id: number,
+  title: string,
+  description: string,
+  dateTime: Date,
+  callback: Function
+) {
+  const userId = sessionStorage.getItem(UserId) || "";
+  return api
+    .put(`task/${id}`, {
+      userId: Number(userId),
+      title,
+      description,
+      dateTime,
+    })
+    .then((res) => {
+      callback();
     })
     .catch((error) => {
       console.error(error);

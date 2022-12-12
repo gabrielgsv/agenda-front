@@ -3,8 +3,9 @@ import { Button, Group, Modal, Textarea, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { handleAddDayNotificatiion } from "../../../../redux/calendar/calendarSlicer";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks";
-import { useTask } from "../context/TaskContext";
-import { createTask, deleteTask } from "./service";
+import { DEFAULT_VALUE, useTask } from "../context/TaskContext";
+import { createTask, deleteTask, updateTask } from "./service";
+import { getTaskByDay } from "../service";
 
 interface ITaskItem {
   id: number;
@@ -21,10 +22,11 @@ interface IProps {
 }
 
 const TaskModal = ({ tasks, setTasks }: IProps) => {
-  const { task, openModal, setOpenModal } = useTask();
+  const { task, setTask, openModal, setOpenModal } = useTask();
   const dispatch = useAppDispatch();
 
   const dateTime = useAppSelector((state) => state.calendar.value);
+  const taskDate = useAppSelector((state) => state.calendar.value);
 
   const form = useForm({
     initialValues: {
@@ -46,26 +48,49 @@ const TaskModal = ({ tasks, setTasks }: IProps) => {
     <>
       <Modal
         opened={openModal}
-        onClose={() => setOpenModal(false)}
+        onClose={() => {
+          setTask(DEFAULT_VALUE.task);
+          setOpenModal(false);
+        }}
         title={"Criar tarefa"}
       >
         <form
           onSubmit={form.onSubmit((values) => {
-            createTask(
-              values.title,
-              values.description,
-              dateTime,
-              (data: ITaskItem) => {
-                const month = dateTime.getMonth() + 1;
-                const year = dateTime.getFullYear();
-                const day = dateTime.getDate();
-                setOpenModal(false);
-                dispatch(
-                  handleAddDayNotificatiion({ year, month, days: [day] })
-                );
-                setTasks([...tasks, data]);
-              }
-            );
+            if (task?.id) {
+              updateTask(
+                task.id,
+                values.title,
+                values.description,
+                dateTime,
+                () => {
+                  const date = new Date(taskDate);
+
+                  getTaskByDay(date).then((res) => {
+                    setTasks(res.data);
+                  });
+                  setTask(DEFAULT_VALUE.task);
+                  setOpenModal(false);
+                }
+              );
+            } else {
+              createTask(
+                values.title,
+                values.description,
+                dateTime,
+                (data: ITaskItem) => {
+                  const month = dateTime.getMonth() + 1;
+                  const year = dateTime.getFullYear();
+                  const day = dateTime.getDate();
+                  setTask(DEFAULT_VALUE.task);
+                  setOpenModal(false);
+
+                  dispatch(
+                    handleAddDayNotificatiion({ year, month, days: [day] })
+                  );
+                  setTasks([...tasks, data]);
+                }
+              );
+            }
           })}
         >
           <TextInput
@@ -88,7 +113,17 @@ const TaskModal = ({ tasks, setTasks }: IProps) => {
           <Group position="right" mt="md">
             <Button
               id="loginButton"
-              onClick={() => deleteTask(task?.id, () => setOpenModal(false))}
+              onClick={() =>
+                deleteTask(task?.id, () => {
+                  const date = new Date(taskDate);
+
+                  getTaskByDay(date).then((res) => {
+                    setTasks(res.data);
+                  });
+                  setTask(DEFAULT_VALUE.task);
+                  setOpenModal(false);
+                })
+              }
               color="red"
             >
               Deletar

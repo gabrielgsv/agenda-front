@@ -15,7 +15,7 @@ type ITaskContext = {
   setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const DEFAULT_VALUE = {
+export const DEFAULT_VALUE = {
   task: {
     id: null,
     userId: null,
