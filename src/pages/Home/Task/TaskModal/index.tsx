@@ -87,7 +87,7 @@ const TaskModal = ({ tasks, setTasks }: IProps) => {
                   dispatch(
                     handleAddDayNotificatiion({ year, month, days: [day] })
                   );
-                  setTasks([...tasks, data]);
+                  tasks ? setTasks([...tasks, data]) : setTasks([data]);
                 }
               );
             }

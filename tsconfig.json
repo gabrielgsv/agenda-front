@@ -3,6 +3,8 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "lib": [
+      "es5", 
+      "es6", 
       "DOM",
       "DOM.Iterable",
       "ESNext"
