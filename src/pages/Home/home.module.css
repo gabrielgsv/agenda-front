@@ -1,0 +1,9 @@
+.pageContainer {
+  height: 80vh;
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 40px;
+}
